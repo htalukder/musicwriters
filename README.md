@@ -6,7 +6,10 @@ Analysis of network of writers in the music industry over the last forty years. 
 
 Statistics Used:
 1. Average Degree: The average number of collaborations by a writer within a given year.
+
 2. Clustering Coefficient: Measures clustering tendency of network. Scale of 0 to 1 where 1 represents highly clustered network and 0 indicates no clusters. 
+
 3. Largest Strongly Connected Component: Largest component of the full network where edges exist between any two nodes.
+
 4. Network Density: Number of observed edges divided by the number of possible edges. 
 
