@@ -12,7 +12,7 @@ load("AdjMat.rDa")
 #load("ind_deg.rDa")
 load("listmat.rDa")
 load("yearly_summary.rDa")
-#load("dataS.rDa")
+fullS=read.csv("fullSong.withUrls.csv")
 
 reactiveAdjacencyMatrix <- function(func){
   reactive(function(){
@@ -44,16 +44,25 @@ shinyServer(function(input, output) {
   
 	plotVal= reactive({  
 		
-		
+		#dat=listmat[[1]]
 		dat=listmat[[input$Year-1969]][,1:2]
 		dat=cbind(dat, as.numeric(as.factor(dat[,2])))
 	#	dat[,2]= paste(dat[,2], "(", sep=" ")
 	#	dat[,2]= paste(dat[,2], dat[,3], ")", sep="")
+
 		colnames(dat)=c("Songs", "Writer ", "Link")
 		
 		dat[,3]=paste("http://wikipedia.com",dat[,1], sep="")
-		dat[,1]= str_replace_all(dat[,1], "[[:punct:]]", " ")
-		dat[,1]= str_replace_all(dat[,1], "[[:digit:]]", " ")
+		dat[,1]=gsub("\\(.*?\\)", "", dat[,1], perl=TRUE)
+		dat[,1]=gsub("%27", "'", dat[,1], perl=TRUE)
+		dat[,1]=gsub("%26", "&", dat[,1], perl=TRUE)
+		dat[,1]=gsub("_", " ", dat[,1], perl=TRUE)
+		dat[,1]=gsub("/", "", dat[,1], perl=TRUE)
+		#dat[,1]=gsub("[^[:alnum:][:space:]']", " ", dat[,1])
+		dat1[,1]=gsub("#Whitney Houston","", dat1[,1],perl=TRUE)
+		dat1[,1]=gsub("#Mariah Carey version","", dat1[,1],perl=TRUE)		
+		dat1[,1]=gsub("%22", " ", dat1[,1], perl=TRUE)
+		dat1[,1]=gsub("%3F","", dat1[,1], perl=TRUE)
 		dat[,1]= str_replace_all(dat[,1], "wiki", " ")
 		dat[,1]=trimSpace(dat[,1])
 		dat[,1]= str_replace_all(dat[,1], "    ", " ")
@@ -77,8 +86,17 @@ shinyServer(function(input, output) {
 		}		
 		
 		unique_dat=data.frame(unique_dat)
-		colnames(unique_dat)=c("Songs", "Writers")
+		#colnames(unique_dat)=c("Songs", "Writers", "Spotify")
+		temp=fullS[fullS[,3]==input$Year,4]
+		songL=as.character(temp)
 		
+		for ( i in 1:length(temp)){
+		songU=as.character(temp[i])
+		songL[i]=paste('<iframe src="https://embed.spotify.com/?uri=',songU,'" width="250" height="80" frameborder="0" allowtransparency="true"></iframe>', sep="")
+		}
+		
+		unique_dat=cbind(unique_dat, songL)
+		colnames(unique_dat)=c("Songs", "Writers", "Spotify")
 
 		return (unique_dat)
 
@@ -108,7 +126,7 @@ shinyServer(function(input, output) {
 		
 	output$scatter= 
 	renderPlot({
-		plot(x=1970:2013, yearly_summary[,input$type], type="b", cex=.5, xlab="Year", ylab=input$type, 	ylim=c(0,round(max(yearly_summary[,input$type]), digits=0)), main=main())
+		plot(x=1970:2013, yearly_summary[,input$type], type="l", cex=.5, xlab="Year", ylab=input$type, 	ylim=c(0,round(max(yearly_summary[,input$type]), digits=0)), main=main())
 		points(x=input$Year, y=yearly_summary[input$Year-1969,input$type], col="red", bg="red", pch=21, cex=2)
 
 		})	
