@@ -19,4 +19,4 @@ Analysis done by Hisham Talukder: htalukde@math.umd.edu
 
 Advisor: Hector Corrada Bravo Email: hcorrada@gmail.com
 
-Data Collected with the help of Lee Mendelowitz: lmendy@gmail.com
+Spotify Data Collected with the help of Lee Mendelowitz: lmendy@gmail.com
