@@ -14,3 +14,9 @@ Statistics Used:
 
 4. Network Density: Number of observed edges divided by the number of possible edges. 
 
+
+Analysis done by Hisham Talukder: htalukde@math.umd.edu
+
+Advisor: Hector Corrada Bravo Email: hcorrada@gmail.com
+
+Data Collected with the help of Lee Mendelowitz: lmendy@gmail.com
