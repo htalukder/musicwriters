@@ -27,6 +27,7 @@ AdjMat=AdjMatF
 
 reactiveAdjacencyMatrix <- function(func){
   reactive(function(){
+    val=func()  
     conns <- cbind(source=row(val)[val>0]-1, target=col(val)[val>0]-1, weight=val[val>0])
     rownames(val)=gsub( "([A-Z])", " \\1", rownames(val), perl=T)  
     list(names=rownames(val), links=conns)
