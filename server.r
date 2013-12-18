@@ -11,9 +11,11 @@ download_not_installed(required_packages)
 
 if(!(require("rCharts"))){
 	devtools::install_github('rCharts', 'ramnathv')
+    require("rCharts")
 }
 if(!(require("ShinyDash"))){
 	devtools::install_github("ShinyDash", "trestletech")
+    require("ShinyDash")
 }
 
 load("./Data/listmat.rDa")
