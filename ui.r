@@ -6,7 +6,7 @@ download_not_installed<-function(x){
   		}
 	}
 }
-required_packages = c("shiny","devtools")
+required_packages = c("shiny","devtools","yaml")
 download_not_installed(required_packages)
 
 if(!(require("rCharts"))){
@@ -22,7 +22,7 @@ reactiveNetwork <- function (outputId) {
 
 
 shinyUI(bootstrapPage(
-	h1("Writers of Number 1 Singles "),
+	h1("Writers of Number 1 Singles"),
 	gridster(tile.width = 280, tile.height = 5,
 	    gridsterItem(col = 1, row = 1, size.x = 2, size.y = 3,
 					sliderInput("Year", "Choose Year",
