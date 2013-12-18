@@ -6,6 +6,9 @@ Analysis of network of writers in the music industry over the last forty years. 
 To install and run the app locally download the git repository and source the files.
 
 ```
+https://github.com/nosson/musicwriters.git
+cd musicwriters
+R
 source("./server.r")
 source("./ui.r")
 runApp()
