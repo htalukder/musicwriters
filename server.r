@@ -47,7 +47,7 @@ shinyServer(function(input, output) {
   
 	plotVal= reactive({  
 		
-		dat=unSongMatList[[input$Year-1969]][,c(1,2,6)]	
+		unique_dat=unSongMatList[[input$Year-1969]][,c(1,2,6)]	
 	
 		
 		unique_dat=data.frame(unique_dat)
