@@ -7,6 +7,10 @@ To install and run the app locally first install the `devtools` package if neces
 
 ```
 devtools::install_github("musicwriters", "htalukder")
+setwd("workingDirectory")
+source("./server.r")
+source("./ui.r")
+runApp()
 ```
 
 
