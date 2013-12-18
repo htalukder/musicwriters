@@ -9,8 +9,8 @@ To install and run the app locally download the git repository and source the fi
 git clone https://github.com/htalukder/musicwriters.git
 cd musicwriters
 R
-source("./server.r")
-source("./ui.r")
+source("server.r")
+source("ui.r")
 runApp()
 ```
 
