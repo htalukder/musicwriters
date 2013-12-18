@@ -8,11 +8,14 @@ library(seqinr)
 library(googleVis)
 library(rCharts)
 
-load("AdjMat.rDa")
+#load("AdjMat.rDa")
 #load("ind_deg.rDa")
 load("listmat.rDa")
 load("yearly_summary.rDa")
-fullS=read.csv("fullSong.withUrls.csv")
+load("AdjMatF.rDa")
+load("unSongMatList.rDa")
+
+AdjMat=AdjMatF
 
 reactiveAdjacencyMatrix <- function(func){
   reactive(function(){
@@ -44,58 +47,17 @@ shinyServer(function(input, output) {
   
 	plotVal= reactive({  
 		
-		#dat=listmat[[1]]
-		dat=listmat[[input$Year-1969]][,1:2]
-		dat=cbind(dat, as.numeric(as.factor(dat[,2])))
-	#	dat[,2]= paste(dat[,2], "(", sep=" ")
-	#	dat[,2]= paste(dat[,2], dat[,3], ")", sep="")
-
-		colnames(dat)=c("Songs", "Writer ", "Link")
-		
-		dat[,3]=paste("http://wikipedia.com",dat[,1], sep="")
-		dat[,1]=gsub("\\(.*?\\)", "", dat[,1], perl=TRUE)
-		dat[,1]=gsub("%27", "'", dat[,1], perl=TRUE)
-		dat[,1]=gsub("%26", "&", dat[,1], perl=TRUE)
-		dat[,1]=gsub("_", " ", dat[,1], perl=TRUE)
-		dat[,1]=gsub("/", "", dat[,1], perl=TRUE)
-		#dat[,1]=gsub("[^[:alnum:][:space:]']", " ", dat[,1])
-		dat1[,1]=gsub("#Whitney Houston","", dat1[,1],perl=TRUE)
-		dat1[,1]=gsub("#Mariah Carey version","", dat1[,1],perl=TRUE)		
-		dat1[,1]=gsub("%22", " ", dat1[,1], perl=TRUE)
-		dat1[,1]=gsub("%3F","", dat1[,1], perl=TRUE)
-		dat[,1]= str_replace_all(dat[,1], "wiki", " ")
-		dat[,1]=trimSpace(dat[,1])
-		dat[,1]= str_replace_all(dat[,1], "    ", " ")
-		dat[,1]= str_replace_all(dat[,1], "   ", " ")
-		dat[,1]= str_replace_all(dat[,1], "  ", " ")
-		dat[,2]=gsub( "([A-Z])", " \\1", dat[,2], perl=T)
-		dat=data.frame(dat)
-		colnames(dat)=c("Songs", "Writer", "Link")
-		dat=transform(dat, Songs = paste('<a href = ', shQuote(Link), 'target="_blank">', Songs, '</a>')) 	
-		dat=dat[,1:2]	
-		colnames(dat)=c("Songs", "Writer")
-		
-		unique_song=unique(dat$Songs)
-		unique_dat=matrix(0, nrow=length(unique_song), ncol=2)
-		unique_dat[,1]=unique_song
-		k=1
-		for (v in unique_song){
-			tempDat=dat[dat[,1]==v, 2]
-			unique_dat[k,2]=paste(as.character(tempDat), collapse=", ")
-			k=k+1
-		}		
-		
-		unique_dat=data.frame(unique_dat)
-		#colnames(unique_dat)=c("Songs", "Writers", "Spotify")
-		temp=fullS[fullS[,3]==input$Year,4]
-		songL=as.character(temp)
+		dat=unSongMatList[[input$Year-1969]][,c(1,2,5)]	
+		temp=dat[,3]
+		songL=rep(0, length(temp))
 		
 		for ( i in 1:length(temp)){
 		songU=as.character(temp[i])
 		songL[i]=paste('<iframe src="https://embed.spotify.com/?uri=',songU,'" width="250" height="80" frameborder="0" allowtransparency="true"></iframe>', sep="")
 		}
 		
-		unique_dat=cbind(unique_dat, songL)
+		unique_dat=cbind(dat[,1:2], songL)
+		unique_dat=data.frame(unique_dat)
 		colnames(unique_dat)=c("Songs", "Writers", "Spotify")
 
 		return (unique_dat)
