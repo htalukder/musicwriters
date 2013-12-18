@@ -37,17 +37,8 @@ reactiveAdjacencyMatrix <- function(func){
 
 shinyServer(function(input, output) {
 	plotVal= reactive({  
-		dat=unSongMatList[[input$Year-1969]][,c(1,2,5)]	
-		temp=dat[,3]
-		songL=rep(0, length(temp))
-		for ( i in 1:length(temp)){
-			songU=as.character(temp[i])
-			songL[i]=paste('<iframe src="https://embed.spotify.com/?uri=',songU,'" width="250" height="80" frameborder="0" allowtransparency="true"></iframe>', sep="")
-		}
-		unique_dat=cbind(dat[,1:2], songL)
-		unique_dat=data.frame(unique_dat)
-		colnames(unique_dat)=c("Songs", "Writers", "Spotify")
-		return (unique_dat)
+		dat=unSongMatList[[input$Year-1969]][,c("Songs","Writers","Spotify")]
+		return(dat)
 		})
 	
 	main=reactive({
