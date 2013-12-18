@@ -6,7 +6,7 @@ download_not_installed<-function(x){
   		}
 	}
 }
-required_packages = c("shiny","XML","httr","igraph","stringr","seqinr","googleVis","devtools")
+required_packages = c("shiny","XML","httr","igraph","stringr","seqinr","googleVis","devtools","yaml")
 download_not_installed(required_packages)
 
 if(!(require("rCharts"))){
@@ -16,8 +16,6 @@ if(!(require("ShinyDash"))){
 	devtools::install_github("ShinyDash", "trestletech")
 }
 
-#load("AdjMat.rDa")
-#load("ind_deg.rDa")
 load("./Data/listmat.rDa")
 load("./Data/yearly_summary.rDa")
 load("./Data/AdjMatF.rDa")
