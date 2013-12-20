@@ -38,7 +38,7 @@ shinyUI(bootstrapPage(
 						"Largest Strongly Connected Component"= "LSCC",
 						"Network Density"= "Network Density (%)")),
 						
-			tags$head(tags$link(rel = 'stylesheet', type = 'text/css', href = 'style.css')),
+			tags$head(tags$link(rel = 'stylesheet', type = 'text/css', href = './www/style.css')),
 				showOutput("scatter", "morris")),
 
 
