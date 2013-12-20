@@ -23,6 +23,11 @@ load("./Data/yearly_summary.rDa")
 load("./Data/AdjMatF.rDa")
 load("./Data/unSongMatList.rDa")
 
+
+dat1=data.frame(date=paste(1970:2013, "-00-00", sep=""), DegAverage=yearly_summary[,1],
+		LSCC=yearly_summary[,3], ClustCoeff=yearly_summary[,2], 
+		NetworkDensity=yearly_summary[,4])
+
 AdjMat=AdjMatF
 
 reactiveAdjacencyMatrix <- function(func){
@@ -62,16 +67,18 @@ shinyServer(function(input, output) {
 		return (main)
 	})
     
-	output$List= renderGvis({
+    output$List= renderGvis({
         gvisTable(plotVal(), options = list(allowHTML = TRUE, height= "260px", 	width="587",
         showRowNumber=TRUE))
-    })
+    	})
     
-	output$scatter=
-    renderPlot({
-        plot(x=1970:2013, yearly_summary[,input$type], type="l", cex=.5, xlab="Year", ylab=input$type, 	ylim=c(0,round(max(yearly_summary[,input$type]), digits=0)), main=main())
-        points(x=input$Year, y=yearly_summary[input$Year-1969,input$type], col="red", bg="red", pch=21, cex=2)
-	})
+    output$scatter= renderChart({
+	m1 <- mPlot(x = "date", y = input$type, type = "Line", data = dat1, 
+	       	    pointSize = 0, lineWidth = 1)
+	m1$set(dom="scatter")
+	return(m1)
+	})	
+	
     output$mainnet <- reactiveAdjacencyMatrix(function() {
     	data=AdjMat[[input$Year-1969]]
     	data
