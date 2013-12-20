@@ -29,6 +29,7 @@ shinyUI(bootstrapPage(
 	gridsterItem(col = 1, row = 1, size.x = 2, size.y = 3,
             sliderInput("Year", "Choose Year",
             min = 1970, max = 2013, value = 1970, format="####")),
+    
     gridsterItem(col = 3, row = 1, size.x = 2, size.y = 9,
 			tags$head(tags$style(type="text/css", "select { height: 30px; width: 300px; fontSize:2}")),
 			selectInput("type", "Choose Descriptive Statistics:",
@@ -36,7 +37,10 @@ shinyUI(bootstrapPage(
 						"Clustering Coefficient" = "Clustering Coefficient",
 						"Largest Strongly Connected Component"= "LSCC",
 						"Network Density"= "Network Density (%)")),
-			plotOutput("scatter", height="230px")),
+						
+			tags$head(tags$link(rel = 'stylesheet', type = 'text/css', href = 'style.css')),
+				showOutput("scatter", "morris")),
+
 
     gridsterItem(col = 1, row = 4, size.x = 2, size.y = 12,
 			includeHTML("./Data/graph.js"),
