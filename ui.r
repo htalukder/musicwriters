@@ -6,7 +6,7 @@ download_not_installed<-function(x){
   		}
 	}
 }
-required_packages = c("shiny","devtools","yaml")
+required_packages = c("shiny","devtools","yaml", "reshape2")
 download_not_installed(required_packages)
 
 if(!(require("rCharts"))){
