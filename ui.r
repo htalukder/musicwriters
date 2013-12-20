@@ -33,10 +33,10 @@ shinyUI(bootstrapPage(
     gridsterItem(col = 3, row = 1, size.x = 2, size.y = 9,
 			tags$head(tags$style(type="text/css", "select { height: 30px; width: 300px; fontSize:2}")),
 			selectInput("type", "Choose Descriptive Statistics:",
-					list("Average Degree" = "Degree Average",
-						"Clustering Coefficient" = "Clustering Coefficient",
+					list("Average Degree" = "DegAverage",
+						"Clustering Coefficient" = "ClustCoeff",
 						"Largest Strongly Connected Component"= "LSCC",
-						"Network Density"= "Network Density (%)")),
+						"Network Density (%)"= "NetworkDensity")),
 						
 			tags$head(tags$link(rel = 'stylesheet', type = 'text/css', href = 'style.css')),
 				showOutput("scatter", "morris")),
